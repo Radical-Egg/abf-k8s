@@ -5,7 +5,7 @@ image:
 nodeSelector: {}
 
 MaxServerPlayers: "6"
-GamePort: 7777
+GamePort: 30000
 QueryPort: 27015
 ServerPassword: changeme
 SteamServerName: "ABF K8s'"
