@@ -1,0 +1,27 @@
+image:
+  repository: ghcr.io/pleut/abiotic-factor-linux-docker
+  tag: latest
+
+nodeSelector: {}
+
+MaxServerPlayers: "6"
+GamePort: 7777
+QueryPort: 27015
+ServerPassword: changeme
+SteamServerName: "ABF K8s'"
+NoAsyncLoadingThread: "true"
+WorldSaveName: "Cascade"
+AutoUpdate: "true"
+UsePerfThreads: "true"
+AdditionalEnvironmentVariables: {}
+
+resources:
+  limits:
+    memory: 2Gi
+    cpu: "1"
+
+storage:
+  path: /data/abf
+
+networking:
+  nodePort: 30000

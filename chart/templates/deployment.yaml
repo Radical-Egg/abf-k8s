@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: gamefiles
+          hostPath:
+            path: {{ .Values.storage.path }}
+            type: DirectoryOrCreate
+      containers:
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: {{ .Release.Name }}
+          env:
+            - name: MaxServerPlayers
+              value: "{{ .Values.MaxServerPlayers }}"
+            - name: Port
+              value: "{{ .Values.GamePort }}"
+            - name: QueryPort
+              value: "{{ .Values.QueryPort }}"
+            - name: ServerPassword
+              value: "{{ .Values.ServerPassword }}"
+            - name: SteamServerName
+              value: "{{ .Values.SteamServerName }}"
+            - name: NoAsyncLoadingThread
+              value: "{{ .Values.NoAsyncLoadingThread }}"
+            - name: WorldSaveName
+              value: "{{ .Values.WorldSaveName }}"
+            - name: AutoUpdate
+              value: "{{ .Values.AutoUpdate }}"
+            - name: UsePerfThreads
+              value: "{{ .Values.UsePerfThreads }}"
+            {{- range $key, $value := .Values.AdditionalEnvironmentVariables }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - containerPort: {{ .Values.GamePort }}
+              name: gameport
+            - containerPort: {{ .Values.QueryPort }}
+              name: queryport
+          volumeMounts:
+            - mountPath: /server
+              name: gamefiles

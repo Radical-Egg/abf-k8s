@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abiotic-factor-server
+  namespace: abiotic-factor
+spec:
+  selector:
+    matchLabels:
+      app: abiotic-factor-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: abiotic-factor-server
+    spec:
+      containers:
+        - image: "ghcr.io/pleut/abiotic-factor-linux-docker:latest"
+          name: abiotic-factor-server
+          env:
+            - name: MaxServerPlayers
+              value: "6"
+            - name: Port
+              value: "7777"
+            - name: QueryPort
+              value: "27015"
+            - name: ServerPassword
+              value: "changeme"
+            - name: SteamServerName
+              value: "ABF K8s"
+            - name: NoAsyncLoadingThread
+              value: "true"
+            - name: WorldSaveName
+              value: "Cascade"
+            - name: AutoUpdate
+              value: "true"
+            - name: UsePerfThreads
+              value: "true"
+          resources:
+            limits:
+              memory: 2Gi
+              cpu: "1"
+          ports:
+            - containerPort: 7777
+              name: gameport
+            - containerPort: 27015
+              name: queryport
+          volumeMounts:
+            - mountPath: /server
+              name: gamefiles
+      volumes:
+        - name: gamefiles
+          hostPath:
+            path: /data/abf
+            type: DirectoryOrCreate
