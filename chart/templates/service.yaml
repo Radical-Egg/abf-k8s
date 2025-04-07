@@ -12,14 +12,13 @@ spec:
       port: {{ .Values.GamePort | int }}
       targetPort: {{ .Values.GamePort | int }}
       protocol: UDP
-      {{- if eq .Values.networking.type "NodePort" }}
+
       nodePort: {{ default "" .Values.networking.nodePort }}
-      {{- end }}
 
     - name: queryport
       port: {{ .Values.QueryPort | int }}
       targetPort: {{ .Values.QueryPort | int }}
       protocol: UDP
-      {{- if eq .Values.networking.type "NodePort" }}
+
       nodePort: {{ default "" (.Values.networking.nodePort | int | add 1) }}
-      {{- end }}
+
