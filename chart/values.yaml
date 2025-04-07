@@ -5,7 +5,7 @@ image:
 nodeSelector: {}
 
 MaxServerPlayers: "6"
-GamePort: 30000
+GamePort: 7777
 QueryPort: 27015
 ServerPassword: changeme
 SteamServerName: "ABF K8s'"
@@ -24,4 +24,4 @@ storage:
   path: /data/abf
 
 networking:
-  nodePort: 30000
+  type: LoadBalancer

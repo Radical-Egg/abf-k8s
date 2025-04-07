@@ -4,18 +4,23 @@ metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 spec:
+  type: {{ .Values.networking.type }}
+  selector:
+    app: {{ .Release.Name }}
   ports:
     - name: gameport
       port: {{ .Values.GamePort | int }}
       targetPort: {{ .Values.GamePort | int }}
-      nodePort: {{ .Values.networking.nodePort }}
       protocol: UDP
+      {{- if eq .Values.networking.type "NodePort" }}
+      nodePort: {{ default "" .Values.networking.nodePort }}
+      {{- end }}
 
     - name: queryport
       port: {{ .Values.QueryPort | int }}
       targetPort: {{ .Values.QueryPort | int }}
-      nodePort: {{ .Values.networking.nodePort | int | add 1 }}
       protocol: UDP
-  type: NodePort
-  selector:
-    app: {{ .Release.Name }}
+      {{- if eq .Values.networking.type "NodePort" }}
+      nodePort: {{ default "" (.Values.networking.nodePort | int | add 1) }}
+      {{- end }}
+
