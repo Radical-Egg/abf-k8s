@@ -6,14 +6,14 @@ metadata:
 spec:
   ports:
     - name: gameport
-      port: {{ .Values.networking.gamePort | int }}
-      targetPort: {{ .Values.networking.gamePort | int }}
+      port: {{ .Values.GamePort | int }}
+      targetPort: {{ .Values.GamePort | int }}
       nodePort: {{ .Values.networking.nodePort }}
       protocol: UDP
 
     - name: queryport
-      port: {{ .Values.networking.queryPort | int }}
-      targetPort: {{ .Values.networking.queryPort | int }}
+      port: {{ .Values.QueryPort | int }}
+      targetPort: {{ .Values.QueryPort | int }}
       nodePort: {{ .Values.networking.nodePort | int | add 1 }}
       protocol: UDP
   type: NodePort
