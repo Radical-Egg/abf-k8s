@@ -23,4 +23,3 @@ spec:
       {{- if eq .Values.networking.type "NodePort" }}
       nodePort: {{ default "" (.Values.networking.nodePort | int | add 1) }}
       {{- end }}
-
