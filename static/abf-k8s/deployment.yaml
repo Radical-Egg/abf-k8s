@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: abiotic-factor-server
-  namespace: abiotic-factor
+  namespace: abf-k8s
 spec:
   selector:
     matchLabels:

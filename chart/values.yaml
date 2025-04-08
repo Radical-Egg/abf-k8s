@@ -21,8 +21,14 @@ resources:
     cpu: "1"
 
 storage:
-  path: /data/abf
+  kind: hostvol
+  hostvol:
+    path: /data/abf
+  pvc:
+    size: 5Gi
+    storageClassName: false
 
 networking:
   type: LoadBalancer
+  publishQueryPort: true
   nodePort: 30000

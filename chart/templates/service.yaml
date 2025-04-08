@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-svc
   namespace: {{ .Release.Namespace }}
 spec:
   type: {{ .Values.networking.type }}
@@ -12,13 +12,14 @@ spec:
       port: {{ .Values.GamePort | int }}
       targetPort: {{ .Values.GamePort | int }}
       protocol: UDP
-
+      {{- if .Values.networking.nodePort }}
       nodePort: {{ default "" .Values.networking.nodePort }}
+      {{- end }}
 
     - name: queryport
       port: {{ .Values.QueryPort | int }}
       targetPort: {{ .Values.QueryPort | int }}
       protocol: UDP
-
+      {{- if and (hasKey .Values.networking "nodePort") .Values.networking.publishQueryPort  }}
       nodePort: {{ default "" (.Values.networking.nodePort | int | add 1) }}
-
+      {{- end }}
