@@ -13,4 +13,5 @@ This repo stores some helm charts
 
 ```yaml
 helm repo add radical-egg https://radical-egg.github.io/pineapple-bun/
+helm repo update
 ```

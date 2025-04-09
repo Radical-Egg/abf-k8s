@@ -4,6 +4,13 @@ Kubernetes deployment for Abiotic Factor dedicated server.
 
 ## Usage
 
+```yaml
+helm repo add radical-egg https://radical-egg.github.io/pineapple-bun/
+helm repo update
+helm install abf-k8s radical-egg/abf-k8s \
+    --set SteamServerName="Eggs server" \
+    --set ServerPassword="some-password" \
+```
 
 ## Configurations
 
