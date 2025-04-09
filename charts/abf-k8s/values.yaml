@@ -8,7 +8,7 @@ MaxServerPlayers: "6"
 GamePort: 30000
 QueryPort: 30001
 ServerPassword: changeme
-SteamServerName: "ABF K8s'"
+SteamServerName: "ABF K8s"
 NoAsyncLoadingThread: "true"
 WorldSaveName: "Cascade"
 AutoUpdate: "true"
