@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-gamefiles
+  name: {{ include "abf-k8s.fullname" . }}-gamefiles
   namespace: {{ .Release.Namespace }}
 spec:
   {{ if .Values.storage.pvc.storageClassName }}

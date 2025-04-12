@@ -2,6 +2,6 @@ apiVersion: v2
 name: abf-k8s
 description: A basic chart for deploying Abiotic Factor to the homelab
 type: application
-version: 0.1.2
+version: 0.1.3
 # The abf-dedicated server image only has a latest tag
 appVersion: "latest"

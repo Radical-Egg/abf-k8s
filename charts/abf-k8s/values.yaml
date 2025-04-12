@@ -1,3 +1,4 @@
+name: abf-k8s
 image:
   repository: ghcr.io/pleut/abiotic-factor-linux-docker
   tag: latest
@@ -31,3 +32,5 @@ storage:
 networking:
   type: LoadBalancer
   publishQueryPort: true
+  # set networking.nodePort to specifically define a nodePort
+  # otherwise LoadBalancer will set one for you

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment
+  name: {{ include "abf-k8s.fullname" . }}
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
@@ -28,7 +28,7 @@ spec:
         {{- if eq .Values.storage.kind "persistentVolumeClaim" }}
         - name: gamefiles
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-gamefiles
+            claimName: {{ include "abf-k8s.fullname" . }}-gamefiles
         {{- end }}
       containers:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -43,7 +43,7 @@ spec:
             - name: ServerPassword
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}-secret
+                  name: {{ include "abf-k8s.fullname" . }}-secret
                   key: serverPassword
             - name: SteamServerName
               value: "{{ .Values.SteamServerName }}"

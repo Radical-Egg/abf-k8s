@@ -1,15 +1,19 @@
 # abf-k8s
 
-Kubernetes deployment for Abiotic Factor dedicated server.
+Kubernetes deployment for Abiotic Factor dedicated server. This chart uses [Pleuts abiotic-factor-linux-docker](https://github.com/Pleut/abiotic-factor-linux-docker) docker image. 
 
 ## Usage
 
-```yaml
+If your are using a PVC then it should be fine to leave out nodeSelector, Otherwise you probably want to pin to a specific node.
+
+
+```bash
 helm repo add radical-egg https://radical-egg.github.io/pineapple-bun/
 helm repo update
-helm install abf-k8s radical-egg/abf-k8s \
+helm install abiotic-factor-gameserver radical-egg/abf-k8s \
     --set SteamServerName="Eggs server" \
-    --set ServerPassword="some-password" \
+    --set ServerPassword="changethispassword" \
+    --set nodeSelector.gameserver=abf-node
 ```
 
 ## Configurations
