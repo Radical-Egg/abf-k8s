@@ -5,10 +5,10 @@ image:
 nodeSelector: {}
 
 MaxServerPlayers: "6"
-GamePort: 30000
-QueryPort: 30001
+GamePort: 7777
+QueryPort: 27015
 ServerPassword: changeme
-SteamServerName: "ABF K8s"
+SteamServerName: "Kuberts Abiotic Factor Server"
 NoAsyncLoadingThread: "true"
 WorldSaveName: "Cascade"
 AutoUpdate: "true"
@@ -17,7 +17,7 @@ AdditionalEnvironmentVariables: {}
 
 resources:
   limits:
-    memory: 4Gi
+    memory: 2Gi
     cpu: "1"
 
 storage:
@@ -31,4 +31,3 @@ storage:
 networking:
   type: LoadBalancer
   publishQueryPort: true
-  nodePort: 30000

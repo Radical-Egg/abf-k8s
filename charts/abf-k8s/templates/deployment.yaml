@@ -41,7 +41,10 @@ spec:
             - name: QueryPort
               value: "{{ .Values.QueryPort }}"
             - name: ServerPassword
-              value: "{{ .Values.ServerPassword }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secret
+                  key: serverPassword
             - name: SteamServerName
               value: "{{ .Values.SteamServerName }}"
             - name: NoAsyncLoadingThread
