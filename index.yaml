@@ -3,6 +3,16 @@ entries:
   abf-k8s:
   - apiVersion: v2
     appVersion: latest
+    created: "2025-04-13T06:28:23.202151643Z"
+    description: A basic chart for deploying Abiotic Factor to the homelab
+    digest: ce9599b233bedfa07737f6bd1a4bf80ea686c304dae47e84521a78470f4b8755
+    name: abf-k8s
+    type: application
+    urls:
+    - https://github.com/Radical-Egg/pineapple-bun/releases/download/abf-k8s-0.1.4/abf-k8s-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: latest
     created: "2025-04-12T16:14:42.752896Z"
     description: A basic chart for deploying Abiotic Factor to the homelab
     digest: a7f67fe06c2de2e0ea0229ce3383b189909fe4719834862a060232a36fe6d076
@@ -41,4 +51,4 @@ entries:
     urls:
     - https://github.com/Radical-Egg/pineapple-bun/releases/download/abf-k8s-0.1.0/abf-k8s-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-12T16:14:42.752916568Z"
+generated: "2025-04-13T06:28:23.202181819Z"
