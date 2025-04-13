@@ -30,6 +30,16 @@ spec:
           persistentVolumeClaim:
             claimName: {{ include "abf-k8s.fullname" . }}-gamefiles
         {{- end }}
+        {{- if .Values.SandboxSettings }}
+        - name: {{ include "abf-k8s.fullname" . }}-sandbox-settings
+          configMap:
+            name: {{ include "abf-k8s.fullname" . }}-sandbox-settings
+        {{- end }}
+        {{- if .Values.AdminSettings }}
+        - name: {{ include "abf-k8s.fullname" . }}-admin-settings
+          configMap:
+            name: {{ include "abf-k8s.fullname" . }}-admin-settings
+        {{- end }}
       containers:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Release.Name }}
@@ -59,6 +69,15 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
+            - name: AdditionalArgs
+              value: "{{- $adds := .Values.AdditionalArgs | default "" -}}
+                {{- if .Values.SandboxSettings }}
+                  {{- $adds = printf "%s -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini" $adds }}
+                {{- end }}
+                {{- if .Values.AdminSettings }}
+                  {{- $adds = printf "%s -AdminIniPath=Config/WindowsServer/AdminSettings.ini" $adds }}
+                {{- end }}
+                {{- trim $adds }}"
           resources: {{- toYaml .Values.resources | nindent 12 }}
           ports:
             - containerPort: {{ .Values.GamePort }}
@@ -68,3 +87,13 @@ spec:
           volumeMounts:
             - mountPath: /server
               name: gamefiles
+          {{- if .Values.SandboxSettings }}
+            - name: {{ include "abf-k8s.fullname" . }}-sandbox-settings
+              mountPath: /server/AbioticFactor/Saved/Config/WindowsServer/SandboxSettings.ini
+              subPath: SandboxSettings.ini
+          {{- end }}
+          {{- if .Values.AdminSettings }}
+            - name: {{ include "abf-k8s.fullname" . }}-admin-settings
+              mountPath: /server/AbioticFactor/Saved/Config/WindowsServer/AdminSettings.ini
+              subPath: AdminSettings.ini
+          {{- end }}
