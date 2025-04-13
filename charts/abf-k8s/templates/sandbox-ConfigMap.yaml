@@ -1,0 +1,12 @@
+{{- if .Values.SandboxSettings }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "abf-k8s.fullname" . }}-sandbox-settings
+data:
+  SandboxSettings.ini: |
+    [SandboxSettings]
+{{- range $key, $value := .Values.SandboxSettings }}
+    {{ $key }}={{ $value }}
+{{- end }}
+{{- end }}

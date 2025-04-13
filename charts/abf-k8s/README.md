@@ -16,6 +16,22 @@ helm install abiotic-factor-gameserver radical-egg/abf-k8s \
     --set nodeSelector.gameserver=abf-node
 ```
 
+You can add SandboxSettings and/or AdminSettings by updating your values.yaml
+
+```yaml
+SandboxSettings:
+  EnemySpawnRate: 1.2
+  StorageByTag: True
+
+AdminSettings:
+  Moderators:
+    - player1
+    - player2
+  BannedPlayers:
+    - player3
+    - player4
+```
+
 ## Configurations
 
 | Config                            | Description                                                               | Default                                           |

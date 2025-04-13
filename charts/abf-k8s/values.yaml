@@ -32,5 +32,7 @@ storage:
 networking:
   type: LoadBalancer
   publishQueryPort: true
-  # set networking.nodePort to specifically define a nodePort
-  # otherwise LoadBalancer will set one for you
+# nodePort: 30000
+
+# SandboxSettings: {}
+# AdminSettings: {}
