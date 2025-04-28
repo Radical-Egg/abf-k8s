@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "project-zomboid-k8s.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- if eq .Values.storage.kind "hostvol" }}
+        - name: gamefiles
+          hostPath:
+            path: {{ .Values.storage.hostvol.gamefiles }}
+            type: DirectoryOrCreate
+        - name: configfiles
+          hostPath:
+            path: {{ .Values.storage.hostvol.configfiles }}
+            type: DirectoryOrCreate
+        {{- end }}
+        {{- if eq .Values.storage.kind "persistentVolumeClaim" }}
+        - name: gamefiles
+          persistentVolumeClaim:
+            claimName: {{ include "project-zomboid-k8s.fullname" . }}-gamefiles
+        - name: configfiles
+          persistentVolumeClaim:
+            claimName: {{ include "project-zomboid-k8s.fullname" . }}-configfiles
+        {{- end }}
+      containers:
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: {{ .Release.Name }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - name: gameport
+              containerPort: {{ .Values.DEFAULT_PORT }}
+            {{- if .Values.networking.publishQueryPort }}
+            - name: queryport
+              containerPort: {{ .Values.UDP_PORT }}
+            {{- end }}
+            {{- if .Values.networking.publishRconPort }}
+            - name: rconport
+              containerPort: {{ .Values.RCON_PORT }}
+            {{- end }}
+          volumeMounts:
+            - name: gamefiles
+              mountPath: /home/steam/ZomboidDedicatedServer/
+            - name: configfiles
+              mountPath: /home/steam/Zomboid/
+          env:
+            - name: ADMIN_USERNAME
+              value: {{ .Values.ADMIN_USERNAME | toString | quote }}
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "project-zomboid-k8s.fullname" . }}-secret
+                  key: adminPassword
+            - name: BIND_IP
+              value: {{ .Values.BIND_IP | toString | quote }}
+            - name: GAME_VERSION
+              value: {{ .Values.GAME_VERSION | toString | quote }}
+            - name: GC_CONFIG
+              value: {{ .Values.GC_CONFIG | toString | quote }}
+            - name: MAP_NAMES
+              value: {{ .Values.MAP_NAMES | toString | quote }}
+            - name: MAX_RAM
+              value: {{ .Values.MAX_RAM | toString | quote }}
+            - name: STEAM_VAC
+              value: {{ .Values.STEAM_VAC | toString | quote }}
+            - name: TZ
+              value: {{ .Values.TZ | toString | quote }}
+            - name: USE_STEAM
+              value: {{ .Values.USE_STEAM | toString | quote }}
+            - name: AUTOSAVE_INTERVAL
+              value: {{ .Values.AUTOSAVE_INTERVAL | toString | quote }}
+            - name: DEFAULT_PORT
+              value: {{ .Values.DEFAULT_PORT | toString | quote }}
+            - name: MAX_PLAYERS
+              value: {{ .Values.MAX_PLAYERS | toString | quote }}
+            - name: MOD_NAMES
+              value: {{ .Values.MOD_NAMES | toString | quote }}
+            - name: MOD_WORKSHOP_IDS
+              value: {{ .Values.MOD_WORKSHOP_IDS | toString | quote }}
+            - name: PAUSE_ON_EMPTY
+              value: {{ .Values.PAUSE_ON_EMPTY | toString | quote }}
+            - name: PUBLIC_SERVER
+              value: {{ .Values.PUBLIC_SERVER | toString | quote }}
+            - name: RCON_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "project-zomboid-k8s.fullname" . }}-secret
+                  key: rconPassword
+            - name: RCON_PORT
+              value: {{ .Values.RCON_PORT | toString | quote }}
+            - name: SERVER_NAME
+              value: {{ .Values.SERVER_NAME | toString | quote }}
+            - name: SERVER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "project-zomboid-k8s.fullname" . }}-secret
+                  key: serverPassword
+            - name: UDP_PORT
+              value: {{ .Values.UDP_PORT | toString | quote }}

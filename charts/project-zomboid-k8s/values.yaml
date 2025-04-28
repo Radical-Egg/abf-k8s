@@ -1,0 +1,57 @@
+name: project-zomboid-k8s
+image:
+  repository: renegademaster/zomboid-dedicated-server
+  tag: latest
+
+nodeSelector: {}
+
+fullnameOverride: false
+nameOverride: false
+
+resources:
+  limits:
+    memory: 2Gi
+    cpu: "1"
+
+storage:
+  kind: hostvol
+  hostvol:
+    gamefiles: /data/project-zomboid-gamefiles
+    configfiles: /data/project-zomboid-configfiles
+  pvc:
+    gamefiles:
+      size: 5Gi
+      storageClassName: false
+    configfiles:
+      size: 1Gi
+      storageClassName: false
+
+networking:
+  type: LoadBalancer
+  publishRconPort: true
+  publishQueryPort: true
+
+ADMIN_USERNAME: superuser
+ADMIN_PASSWORD: superuser
+BIND_IP: 0.0.0.0
+GAME_VERSION: public
+GC_CONFIG: ZGC
+MAP_NAMES: Muldraugh, KY
+MAX_RAM: 4096m
+STEAM_VAC: true
+TZ: UTC
+USE_STEAM: true
+AUTOSAVE_INTERVAL: 15m
+# gameport
+DEFAULT_PORT: 16261
+MAX_PLAYERS: 16
+MOD_NAMES: ""
+MOD_WORKSHOP_IDS: ""
+PAUSE_ON_EMPTY: true
+PUBLIC_SERVER: true
+RCON_PASSWORD: changeme_rcon
+RCON_PORT: 27015
+SERVER_NAME: Mirror Image
+SERVER_PASSWORD: changeme
+# queryport
+UDP_PORT: 16262
