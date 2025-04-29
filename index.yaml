@@ -51,4 +51,15 @@ entries:
     urls:
     - https://github.com/Radical-Egg/pineapple-bun/releases/download/abf-k8s-0.1.0/abf-k8s-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-13T06:28:23.202181819Z"
+  project-zomboid-k8s:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-04-29T04:31:44.724274766Z"
+    description: A basic chart for deploying Project Zomboid to the homelab
+    digest: 95cfaa3544208ce63df02a34d92b1843ca16c2ce3732b75cdcf74b5c7ae64177
+    name: project-zomboid-k8s
+    type: application
+    urls:
+    - https://github.com/Radical-Egg/pineapple-bun/releases/download/project-zomboid-k8s-0.1.0/project-zomboid-k8s-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-04-29T04:31:44.724292439Z"
