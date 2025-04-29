@@ -4,6 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ include "project-zomboid-k8s.fullname" . }}-gamefiles
   namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/resource-policy: keep
 spec:
   {{ if .Values.storage.pvc.storageClassName }}
   storageClassName: {{ .Values.storage.pvc.gamefiles.storageClassName }}
@@ -21,6 +23,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ include "project-zomboid-k8s.fullname" . }}-configfiles
   namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/resource-policy: keep
 spec:
   {{ if .Values.storage.pvc.storageClassName }}
   storageClassName: {{ .Values.storage.pvc.configfiles.storageClassName }}

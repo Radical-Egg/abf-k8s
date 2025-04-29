@@ -4,6 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ include "abf-k8s.fullname" . }}-gamefiles
   namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/resource-policy: keep
 spec:
   {{ if .Values.storage.pvc.storageClassName }}
   storageClassName: {{ .Values.storage.pvc.storageClassName }}
