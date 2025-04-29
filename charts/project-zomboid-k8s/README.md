@@ -57,7 +57,7 @@ storage.kind can be set to `hostvol` or `persistentVolumeClaim`.
 ```bash
 helm repo add radical-egg https://radical-egg.github.io/pineapple-bun/
 helm repo update
-helm install pz-release charts/project-zomboid-k8s/ \
+helm install pz-release radical-egg/project-zomboid-k8s \
 	--set SERVER_NAME="Kuberts ZomboidK8s" \
 	--set SERVER_PASSWORD="foobar" \
 	--set ADMIN_PASSWORD="foobar2admin" \
@@ -67,7 +67,7 @@ helm install pz-release charts/project-zomboid-k8s/ \
 If you are planning to use type: NodePort be sure to set your environment variable ports as well. UDP_PORT will be nodePort+1 and RCON_PORT will be nodePort+2
 
 ```bash
-helm install pz-release charts/project-zomboid-k8s/ \
+helm install pz-release radical-egg/project-zomboid-k8s \
 	--set SERVER_NAME="Kuberts ZomboidK8s" \
 	--set SERVER_PASSWORD="foobar" \
 	--set ADMIN_PASSWORD="foobar2admin" \
