@@ -3,4 +3,5 @@ name: project-zomboid-k8s
 description: A basic chart for deploying Project Zomboid to the homelab
 type: application
 version: 0.1.0
+# This container image does not have any other tags
 appVersion: latest
