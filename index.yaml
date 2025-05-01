@@ -3,6 +3,16 @@ entries:
   abf-k8s:
   - apiVersion: v2
     appVersion: latest
+    created: "2025-05-01T22:36:59.588166868Z"
+    description: A basic chart for deploying Abiotic Factor to the homelab
+    digest: a6593bfe65f192120cf41a6bfb6f43f9e4407c4359bbf0e8aa785fa72dd65671
+    name: abf-k8s
+    type: application
+    urls:
+    - https://github.com/Radical-Egg/pineapple-bun/releases/download/abf-k8s-0.1.7/abf-k8s-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: latest
     created: "2025-05-01T05:26:46.87735913Z"
     description: A basic chart for deploying Abiotic Factor to the homelab
     digest: 4788f170606e3dacf38caddab26bad8515b0fa24115f8f2511e3a3e7ef5fecb0
@@ -71,7 +81,28 @@ entries:
     urls:
     - https://github.com/Radical-Egg/pineapple-bun/releases/download/abf-k8s-0.1.0/abf-k8s-0.1.0.tgz
     version: 0.1.0
+  ark-k8s:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-05-01T22:36:59.772344926Z"
+    description: A basic chart for deploying ARK Survival Evolved to the homelab
+    digest: 5b3aa61fd5e95b98f3aacf00be418756a02389d0245e7f955396377dbb0f0793
+    name: ark-k8s
+    type: application
+    urls:
+    - https://github.com/Radical-Egg/pineapple-bun/releases/download/ark-k8s-0.1.0/ark-k8s-0.1.0.tgz
+    version: 0.1.0
   project-zomboid-k8s:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-05-01T22:36:59.951140301Z"
+    description: A basic chart for deploying Project Zomboid to the homelab
+    digest: 52028ba95280667bc2aaf2abd6b71d2353745e5266dae061769ae07dc58a3427
+    name: project-zomboid-k8s
+    type: application
+    urls:
+    - https://github.com/Radical-Egg/pineapple-bun/releases/download/project-zomboid-k8s-0.1.4/project-zomboid-k8s-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     appVersion: latest
     created: "2025-05-01T05:26:46.981411197Z"
@@ -112,4 +143,4 @@ entries:
     urls:
     - https://github.com/Radical-Egg/pineapple-bun/releases/download/project-zomboid-k8s-0.1.0/project-zomboid-k8s-0.1.0.tgz
     version: 0.1.0
-generated: "2025-05-01T05:26:46.981448867Z"
+generated: "2025-05-01T22:36:59.951189312Z"
