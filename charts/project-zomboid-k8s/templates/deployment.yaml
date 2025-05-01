@@ -39,6 +39,7 @@ spec:
         {{- end }}
       containers:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           name: {{ .Release.Name }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           ports:

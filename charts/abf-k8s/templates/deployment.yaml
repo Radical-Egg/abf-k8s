@@ -42,6 +42,7 @@ spec:
         {{- end }}
       containers:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           name: {{ .Release.Name }}
           env:
             - name: MaxServerPlayers

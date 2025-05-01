@@ -2,6 +2,7 @@ name: abf-k8s
 image:
   repository: ghcr.io/pleut/abiotic-factor-linux-docker
   tag: latest
+imagePullPolicy: IfNotPresent
 
 nodeSelector: {}
 
