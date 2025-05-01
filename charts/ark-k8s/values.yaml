@@ -1,0 +1,52 @@
+# fullnameOverride: ""
+# nameOverride: ""
+nodeSelector: {}
+
+storage:
+  kind: hostvol
+  hostvol:
+    gamefiles: /data/ark-gamefiles
+    backups: /data/ark-backups
+  pvc:
+    gamefiles:
+      size: 5Gi
+      storageClassName: false
+    backups:
+      size: 1Gi
+      storageClassName: false
+
+image:
+  repository: hermsi/ark-server
+  tag: latest
+
+imagePullPolicy: Always
+
+resources:
+  limits:
+    memory: 2Gi
+    cpu: "1"
+
+networking:
+  type: LoadBalancer
+  publishRconPort: true # 27020
+  publishQueryPort: true # 27015
+  publishUdpPort: true # 7778 (game port +1)
+#  nodePort: 30000
+
+SESSION_NAME: "ARK K8s"
+SERVER_MAP: "TheIsland"
+SERVER_PASSWORD: "changeme"
+ADMIN_PASSWORD: "changeme_admin"
+MAX_PLAYERS: 20
+UPDATE_ON_START: false
+BACKUP_ON_STOP: false
+PRE_UPDATE_BACKUP: true
+WARN_ON_STOP: true
+ENABLE_CROSSPLAY: false
+DISABLE_BATTLEYE: false
+ARK_SERVER_VOLUME: /app
+GAME_CLIENT_PORT: 7777
+UDP_SOCKET_PORT: 7778
+RCON_PORT: 27020
+SERVER_LIST_PORT: 27015
+GAME_MOD_IDS: ""

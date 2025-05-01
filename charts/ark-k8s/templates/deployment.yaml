@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ark-k8s.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- if eq .Values.storage.kind "hostvol" }}
+        - name: gamefiles
+          hostPath:
+            path: {{ .Values.storage.hostvol.gamefiles }}
+            type: DirectoryOrCreate
+        - name: backups
+          hostPath:
+            path: {{ .Values.storage.hostvol.backups }}
+            type: DirectoryOrCreate
+        {{- end }}
+        {{- if eq .Values.storage.kind "persistentVolumeClaim" }}
+        - name: gamefiles
+          persistentVolumeClaim:
+            claimName: {{ include "ark-k8s.fullname" . }}-gamefiles
+        - name: backups
+          persistentVolumeClaim:
+            claimName: {{ include "ark-k8s.fullname" . }}-backups
+        {{- end }}
+      containers:
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          name: {{ .Release.Name }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - name: gameport
+              containerPort: {{ .Values.GAME_CLIENT_PORT }}
+            {{- if .Values.networking.publishUdpPort }}
+            - name: udpport
+              containerPort: {{ .Values.UDP_SOCKET_PORT }}
+            {{- end }}
+            {{- if .Values.networking.publishQueryPort }}
+            - name: queryport
+              containerPort: {{ .Values.SERVER_LIST_PORT }}
+            {{- end }}
+            {{- if .Values.networking.publishRconPort }}
+            - name: rconport
+              containerPort: {{ .Values.RCON_PORT }}
+            {{- end }}
+          volumeMounts:
+            - name: gamefiles
+              mountPath: {{ .Values.ARK_SERVER_VOLUME }}
+            - name: backups
+              mountPath: /home/steam/ARK-Backups
+          env:
+            - name: SESSION_NAME
+              value: {{ .Values.SESSION_NAME | toString | quote }}
+            - name: SERVER_MAP
+              value: {{ .Values.SERVER_MAP | toString | quote }}
+            - name: SERVER_PASSWORD
+              valueFrom:
+                secretKeyRef: 
+                  name: {{ include "ark-k8s.fullname" . }}-secret
+                  key: serverPassword
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ark-k8s.fullname" . }}-secret
+                  key: adminPassword
+            - name: MAX_PLAYERS
+              value: {{ .Values.MAX_PLAYERS | toString | quote }}
+            - name: UPDATE_ON_START
+              value: {{ .Values.UPDATE_ON_START | toString | quote }}
+            - name: BACKUP_ON_STOP
+              value: {{ .Values.BACKUP_ON_STOP | toString | quote }}
+            - name: PRE_UPDATE_BACKUP
+              value: {{ .Values.PRE_UPDATE_BACKUP | toString | quote }}
+            - name: WARN_ON_STOP
+              value: {{ .Values.WARN_ON_STOP | toString | quote }}
+            - name: ENABLE_CROSSPLAY
+              value: {{ .Values.ENABLE_CROSSPLAY | toString | quote }}
+            - name: DISABLE_BATTLEYE
+              value: {{ .Values.DISABLE_BATTLEYE | toString | quote }}
+            - name: ARK_SERVER_VOLUME
+              value: {{ .Values.ARK_SERVER_VOLUME | toString | quote }}
+            - name: GAME_CLIENT_PORT
+              value: {{ .Values.GAME_CLIENT_PORT | toString | quote }}
+            - name: UDP_SOCKET_PORT
+              value: {{ .Values.UDP_SOCKET_PORT | toString | quote }}
+            - name: RCON_PORT
+              value: {{ .Values.RCON_PORT | toString | quote }}
+            - name: SERVER_LIST_PORT
+              value: {{ .Values.SERVER_LIST_PORT | toString | quote }}
+            - name: GAME_MOD_IDS
+              value: {{ .Values.GAME_MOD_IDS | toString | quote }}
