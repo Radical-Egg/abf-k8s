@@ -84,6 +84,16 @@ entries:
   ark-k8s:
   - apiVersion: v2
     appVersion: latest
+    created: "2025-05-02T04:33:51.693847393Z"
+    description: A basic chart for deploying ARK Survival Evolved to the homelab
+    digest: 63b729bc1183aa5bb9560484828be49f21c29c78e7e68eca961c93febe8b0f55
+    name: ark-k8s
+    type: application
+    urls:
+    - https://github.com/Radical-Egg/pineapple-bun/releases/download/ark-k8s-0.1.1/ark-k8s-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
     created: "2025-05-01T22:36:59.772344926Z"
     description: A basic chart for deploying ARK Survival Evolved to the homelab
     digest: 5b3aa61fd5e95b98f3aacf00be418756a02389d0245e7f955396377dbb0f0793
@@ -143,4 +153,4 @@ entries:
     urls:
     - https://github.com/Radical-Egg/pineapple-bun/releases/download/project-zomboid-k8s-0.1.0/project-zomboid-k8s-0.1.0.tgz
     version: 0.1.0
-generated: "2025-05-01T22:36:59.951189312Z"
+generated: "2025-05-02T04:33:51.693879011Z"
