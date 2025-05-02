@@ -35,7 +35,7 @@ spec:
     - name: rconport
       port: {{ .Values.RCON_PORT | int }}
       targetPort: {{ .Values.RCON_PORT | int }}
-      protocol: UDP
+      protocol: TCP
       {{- if and (hasKey .Values.networking "nodePort") .Values.networking.publishRconPort  }}
       nodePort: {{ default "" (.Values.networking.nodePort | int | add 3) }}
       {{- end }}

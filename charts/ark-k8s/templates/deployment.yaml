@@ -45,17 +45,21 @@ spec:
           ports:
             - name: gameport
               containerPort: {{ .Values.GAME_CLIENT_PORT }}
+              protocol: UDP
             {{- if .Values.networking.publishUdpPort }}
             - name: udpport
               containerPort: {{ .Values.UDP_SOCKET_PORT }}
+              protocol: UDP
             {{- end }}
             {{- if .Values.networking.publishQueryPort }}
             - name: queryport
               containerPort: {{ .Values.SERVER_LIST_PORT }}
+              protocol: UDP
             {{- end }}
             {{- if .Values.networking.publishRconPort }}
             - name: rconport
               containerPort: {{ .Values.RCON_PORT }}
+              protocol: TCP
             {{- end }}
           volumeMounts:
             - name: gamefiles
