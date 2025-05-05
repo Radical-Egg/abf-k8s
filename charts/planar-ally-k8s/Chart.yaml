@@ -1,0 +1,6 @@
+apiVersion: v2
+name: planar-ally-k8s
+description: A basic chart for deploying Planar Ally to the homelab
+type: application
+version: 0.1.0
+appVersion: v2025.1.1

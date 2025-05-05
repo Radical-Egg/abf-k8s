@@ -23,8 +23,8 @@ imagePullPolicy: Always
 
 resources:
   limits:
-    memory: 2Gi
-    cpu: "1"
+    memory: 8Gi
+    cpu: "2"
 
 networking:
   type: LoadBalancer

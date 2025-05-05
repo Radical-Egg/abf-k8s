@@ -1,0 +1,33 @@
+# fullnameOverride: ""
+# nameOverride: ""
+nodeSelector: {}
+replicas: 1
+
+image:
+  repository: docker.io/kruptein/planarally
+  tag: v2025.1.1
+
+imagePullPolicy: Always
+
+resources:
+  limits:
+    memory: 500Mi
+    cpu: 100m
+
+networking:
+  type: LoadBalancer
+  port: 8000
+#  nodePort: 30000
+
+storage:
+  kind: hostvol
+  hostvol:
+    data: /data/pa-data
+    assets: /data/pa-assets
+  pvc:
+    data:
+      size: 5Gi
+      storageClassName: false
+    assets:
+      size: 10Gi
+      storageClassName: false

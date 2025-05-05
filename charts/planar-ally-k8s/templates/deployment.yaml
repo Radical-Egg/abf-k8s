@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "planar-ally-k8s.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- if eq .Values.storage.kind "hostvol" }}
+        - name: data
+          hostPath:
+            path: {{ .Values.storage.hostvol.data }}
+            type: DirectoryOrCreate
+        - name: assets
+          hostPath:
+            path: {{ .Values.storage.hostvol.assets }}
+            type: DirectoryOrCreate
+        {{- end }}
+        {{- if eq .Values.storage.kind "persistentVolumeClaim" }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "planar-ally-k8s.fullname" . }}-data
+        - name: assets
+          persistentVolumeClaim:
+            claimName: {{ include "planar-ally-k8s.fullname" . }}-assets
+        {{- end }}
+      initContainers:
+        - name: fix-perms
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              chown 9000:9000 /data
+              chown 9000:9000 /assets
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: assets
+              mountPath: /assets
+      containers:
+      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        name: {{ .Release.Name }}
+        resources: {{- toYaml .Values.resources | nindent 12 }}
+        ports:
+          - name: webport
+            containerPort: 8000
+            protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /planarally/data
+          - name: assets
+            mountPath: /planarally/static/assets
