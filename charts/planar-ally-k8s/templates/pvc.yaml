@@ -1,0 +1,37 @@
+{{ if eq .Values.storage.kind "persistentVolumeClaim" }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "planar-ally-k8s.fullname" . }}-data
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  {{ if .Values.storage.pvc.data.storageClassName }}
+  storageClassName: {{ .Values.storage.pvc.data.storageClassName }}
+  {{ end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage.pvc.data.size }}
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "planar-ally-k8s.fullname" . }}-assets
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  {{ if .Values.storage.pvc.assets.storageClassName }}
+  storageClassName: {{ .Values.storage.pvc.assets.storageClassName }}
+  {{ end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage.pvc.assets.size }}
+{{ end }}
