@@ -84,6 +84,16 @@ entries:
   ark-k8s:
   - apiVersion: v2
     appVersion: latest
+    created: "2025-05-05T19:56:10.189564531Z"
+    description: A basic chart for deploying ARK Survival Evolved to the homelab
+    digest: 11c8409cd677e28167d1aa0e47a0f318e5dcb05d926279407c92daef34c9ded1
+    name: ark-k8s
+    type: application
+    urls:
+    - https://github.com/Radical-Egg/pineapple-bun/releases/download/ark-k8s-0.1.3/ark-k8s-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: latest
     created: "2025-05-03T02:35:19.361191912Z"
     description: A basic chart for deploying ARK Survival Evolved to the homelab
     digest: eb9fb6d91ddf83e9ef66443eee326fe3df5614a94a478b2cc815feea8c64396e
@@ -111,6 +121,17 @@ entries:
     type: application
     urls:
     - https://github.com/Radical-Egg/pineapple-bun/releases/download/ark-k8s-0.1.0/ark-k8s-0.1.0.tgz
+    version: 0.1.0
+  planar-ally-k8s:
+  - apiVersion: v2
+    appVersion: v2025.1.1
+    created: "2025-05-05T19:56:10.41019275Z"
+    description: A basic chart for deploying Planar Ally to the homelab
+    digest: 11db83ab5d20c3f89645ebdce2e92230f168dc4a797df96fccbc6ff5dd1f6c79
+    name: planar-ally-k8s
+    type: application
+    urls:
+    - https://github.com/Radical-Egg/pineapple-bun/releases/download/planar-ally-k8s-0.1.0/planar-ally-k8s-0.1.0.tgz
     version: 0.1.0
   project-zomboid-k8s:
   - apiVersion: v2
@@ -163,4 +184,4 @@ entries:
     urls:
     - https://github.com/Radical-Egg/pineapple-bun/releases/download/project-zomboid-k8s-0.1.0/project-zomboid-k8s-0.1.0.tgz
     version: 0.1.0
-generated: "2025-05-03T02:35:19.361233529Z"
+generated: "2025-05-05T19:56:10.410274312Z"
